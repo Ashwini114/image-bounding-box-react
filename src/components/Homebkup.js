@@ -1,4 +1,5 @@
 import React , {Component}  from "react";
+import ModalComponent from "./ModalComponent"
 import { Card, Button, CardHeader, CardImg,
     Modal, ModalHeader, ModalBody, ModalFooter,Row,Col,Input,InputGroupAddon,InputGroup } from 'reactstrap';
 import { conditionalExpression } from "@babel/types";
@@ -47,7 +48,7 @@ class Home extends Component{
      
 
   }
-
+   /* Saves new and old images with bounding box */
   addToGallery()
   {
 
@@ -83,6 +84,7 @@ class Home extends Component{
       this.toggle();
       
   }
+  /** To open modal to upload new image */
   open_new = () =>{
     this.setState({
       gallery_status : true
@@ -97,6 +99,7 @@ class Home extends Component{
           modal : !this.state.modal
       });
   }
+  /** Preview uploaded image  */
   showImage = (e) =>{
    
     var reader = new FileReader();
@@ -115,7 +118,7 @@ class Home extends Component{
             var img = reference.refs.uploaded_image;
             
             setTimeout(() => {
-                ctx.drawImage(img, 0, 0,450,450);
+                ctx.drawImage(img, 50, 0,900,450);
 
             }, 2000);
            
@@ -128,6 +131,7 @@ class Home extends Component{
     };
 
   }
+  /** Preview existing images */
   updateImage = (image_details) =>{
    
     this.setState({
@@ -144,7 +148,7 @@ class Home extends Component{
             this.refs.x2.value = image_details.x2;
             this.refs.y2.value = image_details.y2;
             setTimeout(() => {
-                ctx.drawImage(img, 0, 0,450,450);
+              ctx.drawImage(img, 50, 0,900,450);
                 if(image_details.x1 != 0 && image_details.y1 !=0 && image_details.x2 !=0 && image_details.y2 != 0)
                 this.drawRect(image_details.x1,image_details.y1,image_details.x2,image_details.y2)
                 else
@@ -160,11 +164,12 @@ class Home extends Component{
 
 
 }
-
+ /* Function to drag and create bounding box on images without bounding box */
   dragAndDrawBox = () =>{
     
      
      var canvas = this.refs.canvases;
+     
      var ctx = canvas.getContext('2d');
      var canvasx = canvas.getBoundingClientRect().left;
      var canvasy = canvas.getBoundingClientRect().top;
@@ -188,7 +193,7 @@ class Home extends Component{
         mousey = parseInt(e.clientY-canvasy);
         if(mousedown) {
           var img = this.refs.uploaded_image;
-         ctx.drawImage(img, 0, 0,450,450);
+          ctx.drawImage(img, 50, 0,900,450);
 
           var width = mousex-last_mousex;
           var height = mousey-last_mousey;
@@ -203,6 +208,7 @@ class Home extends Component{
    
 
   }
+  /** Change coordinates of bounding box as per input from input boxes */
   changeCoordinates = () =>{
   
     var c =this.refs.canvases;
@@ -212,7 +218,7 @@ class Home extends Component{
         var img = this.refs.uploaded_image;
         
         setTimeout(() => {
-            ctx.drawImage(img, 0, 0,450,450);
+          ctx.drawImage(img, 50, 0,900,450);
             if(this.refs.x1)
              this.drawRect(this.refs.x1.value,this.refs.y1.value,this.refs.x2.value,this.refs.y2.value);
 
@@ -222,6 +228,7 @@ class Home extends Component{
 
 
   }
+  /** Function to draw a bounding box */
   drawRect = (x1,y1,x2,y2) =>{
    
     var context = this.refs.canvases;
@@ -253,7 +260,7 @@ class Home extends Component{
       <img  id="uploaded_image" src={this.state.uploaded_image} width="100%" ref="uploaded_image" />
       </div>
       
-      <canvas id="myCanvas"  ref="canvases" width="450" height="450">
+      <canvas id="myCanvas"  ref="canvases" width="900" height="450">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
        
@@ -309,7 +316,7 @@ class Home extends Component{
       
       { gallery_listing }
       
-      <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle.bind(this)} bsClass="my-modal" >
+      <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle.bind(this)} >
         <ModalHeader toggle={this.toggle.bind(this)}>Modal title</ModalHeader>
         <ModalBody>
             {this.state.gallery_status ? upload_image_button : uploaded_image_view }
