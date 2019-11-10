@@ -2,11 +2,12 @@ import React,{useState,createRef,forwardRef, useImperativeHandle } from "react"
 import {Modal, ModalHeader, ModalBody, ModalFooter,Button,Row,Col} from 'reactstrap';
 import ImageComponent from './ImageComponent'
 
+
 const  ModalComponent = forwardRef((props,ref) => {
 const [modal_variables,updateModal] = useState({
     gallery_status:true,
     edit_status:0,
-    uploaded_image:'',
+    uploaded_image: '',
     
 })
 const coordinates = {x1:0,y1:0,x2:0,y2:0}
@@ -182,7 +183,7 @@ const drawRect = (x1,y1,x2,y2) =>{
  }
 /* JSX elements */
 /* To show upload image button */
-const upload_image_button = <input type="file" name="name" onChange={showImage}/>;
+const upload_image_button = <input type="file" name="name" onChange={showImage} id="uplo"/>;
 
 /* Preview of uploaded image */
 const uploaded_image_view = <div >
@@ -211,7 +212,7 @@ const uploaded_image_view = <div >
 </Row>
 <div>
     <div className="add_new">
-    <Button onClick={()=>props.addToGallery(
+    <Button id="save_changes" onClick={()=>props.addToGallery(
         {
             image:modal_variables.uploaded_image,
             x1:x1Ref.current.value,x2:x2Ref.current.value,

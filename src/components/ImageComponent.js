@@ -1,11 +1,12 @@
 import React from "react"
+import img from "../assets/loading.jpg"
 
 const ImageComponent = (props) =>{
-    
+   
     return(
         <div>
             <div className="hide">
-                <img  id="uploaded_image" src={props.uploaded_image} width="100%"  />
+                <img  id="uploaded_image" src={props.uploaded_image?props.uploaded_image:img} width="100%"  />
             </div>
 
             <canvas  id="myCanvas"    width="900" height="450">
